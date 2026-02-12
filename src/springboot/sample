@@ -1,0 +1,59 @@
+/* // var User_SB = {
+      //                  name:"Sujatha",
+        //                email:"Sujatha@gmail.com",
+          //              password:"Sujatha@874",
+            //            mobile:"994563217"
+             //      }
+             //   </div>
+                                                 </div >
+                                                 <div className='mt-3'>
+                                                 <label><strong>Email</strong></label>
+                                                 <input type="text" className='form-control' placeholder='Email' onChange={e => updateEmail(e)}></input>
+                                                 <div className='text-danger'>
+                                                                                                                                
+                                                 </div>
+                                                 </div>
+                                                 <div className='mt-3'>
+                                                 <label><strong>password</strong></label>
+                                                 <input type="password" className='form-control' placeholder='password' onChange={e => updatePassword(e)}></input>
+                                                 <div className='text-danger'>
+                                                      </div> <button className='btn btn-warning' onClick={ e=> handleSignup()} >create account</button>
+                         
+                                                      
+                                                 </div>
+             // 
+             // 
+             // 
+             // 
+             // 
+             // 
+             // 
+             // 
+             // 
+             // 
+             // 
+             // 
+             // 
+             // 
+             // 
+             // 
+             // 
+             // 
+             // 
+             // 
+             // */
+
+             import React from "react";
+
+function Child({ sendDataToParent }) {
+  const handleClick = () => {
+    sendDataToParent("Hello from Child!");
+  };
+
+  return (
+    <div>
+      <h2>Child Component</h2>
+      <button onClick={handleClick}>Send Data to Parent</button>
+    </div>
+  );
+}

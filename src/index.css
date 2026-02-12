@@ -1,0 +1,147 @@
+.display-block{
+    display: block !important;
+}
+.display-none
+{
+    display:none !important;
+}
+
+.logo
+{
+    width: 150px;
+    height: auto;
+}
+.search-dropdown{
+    position:absolute;
+    width:100%;
+    background-color:#ffffff;
+    z-index:1000;
+    border:1px solid #e5e5e5;
+    top: 37px;
+    padding:10px
+
+}
+.productcard{
+    width:200px;
+    height:auto;
+}
+
+.amazon-pointer{
+    cursor:pointer;
+    
+    
+}
+.btn:hover {
+    background-color: #0056b3;
+  }
+
+  .img-single
+  {
+    width:500px;
+    height:auto;
+  }
+  .img-lab
+  {
+    width:600px;
+    height:auto;
+  }
+  .profile_pic1
+  {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;   /* Optional */
+    margin-bottom: 10px;
+    width:150px;
+    height:auto;
+    border-radius: 5%
+  }
+  .dance11
+  {
+     display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;   /* Optional */
+    margin-bottom: 10px;
+    width:280px;
+    height:auto;
+    border-radius: 5%
+
+  }
+  .sports11
+  {
+     display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;   /* Optional */
+    margin-bottom: 10px;
+    width:380px;
+    height:auto;
+    border-radius: 5%
+
+  }
+  .std_rec_add
+  {
+     display: block;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;    
+    margin-bottom: 10px;
+    width:auto;
+    height:auto;
+    border-radius: 5%
+
+  }
+  .std_rec_add1 
+  {
+    display: inside;
+    margin-left: 0px;
+    margin-right: 5px;
+    margin-top: 2px;    
+    margin-bottom: 2px;
+    width: auto;
+    height:40px;
+    border-radius: 5%
+
+  }
+  .std_rec_add1_Address
+  {
+    display: inside;
+    margin-left: 0px;
+    margin-right: 5px;
+    margin-top: 2px;    
+    margin-bottom: 2px;
+    width: auto;
+    height:80px;
+    border-radius: 5%
+
+  }
+  .std_rec_add11
+  {
+    display: block;
+    margin-left: 0px;
+    margin-right: 50px;
+    margin-top: 2px;    
+    margin-bottom: 2px;
+    width: auto;
+    height:40px;
+    border-radius: 15%px
+
+  }
+  .compact-table {
+  font-size: 15px;         /* smaller text */
+  border-collapse: collapse;
+  width: 100%;
+  table-layout:auto;
+}
+.compact-table th,
+.compact-table td {
+  padding: 2px 2px;        /* less padding = more compact */
+  border: 1px solid #ccc;
+  vertical-align: middle;
+  text-align: left;
+  word-break: break-word;  /* wrap long text */
+  white-space: nowrap;
+   height: 10px;
+  vertical-align: middle;
+}

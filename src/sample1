@@ -1,0 +1,304 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
+export default function StudentTable() {
+  const [students, setStudents] = useState([]);
+  const [editIndex, setEditIndex] = useState(null);
+
+  useEffect(() => {
+    axios.post("http://localhost:8080/s/pullrecords").then(res => {
+      setStudents(res.data);
+    });
+  }, []);
+
+  const handleEditClick = (index) => setEditIndex(index);
+
+  const handleInputChange = (e, index, field) => {
+    const updated = [...students];
+    updated[index][field] = e.target.value;
+    setStudents(updated);
+  };
+
+  const saveRow = async (student) => {
+    await axios.put(`http://localhost:8080/s/update/${student.rollno}`, student);
+    setEditIndex(null);
+    alert("Saved successfully!");
+  };
+
+  return (
+    <div className="container">
+      <h2>Student Records</h2>
+      <table className="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Rollno</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Address</th>
+            <th>Class</th>
+            <th>DOB</th>
+            <th>DOJ</th>
+            <th>Mobile</th>
+            <th>Father</th>
+            <th>Guardian</th>
+            <th>Class Teacher</th>
+            <th>Other</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {students.map((stu, i) => (
+            <tr key={stu.rollno}>
+              <td>{stu.rollno}</td>
+              <td>
+                {editIndex === i ? (
+                  <input value={stu.name} onChange={(e) => handleInputChange(e, i, "name")} />
+                ) : (
+                  stu.name
+                )}
+              </td>
+              <td>
+                {editIndex === i ? (
+                  <input value={stu.gender} onChange={(e) => handleInputChange(e, i, "gender")} />
+                ) : (
+                  stu.gender
+                )}
+              </td>
+              <td>
+                {editIndex === i ? (
+                  <input value={stu.address} onChange={(e) => handleInputChange(e, i, "address")} />
+                ) : (
+                  stu.address
+                )}
+              </td>
+              <td>
+                {editIndex === i ? (
+                  <input value={stu.standardandsection} onChange={(e) => handleInputChange(e, i, "standardandsection")} />
+                ) : (
+                  stu.standardandsection
+                )}
+              </td>
+              <td>
+                {editIndex === i ? (
+                  <input value={stu.dob} onChange={(e) => handleInputChange(e, i, "dob")} />
+                ) : (
+                  stu.dob
+                )}
+              </td>
+              <td>
+                {editIndex === i ? (
+                  <input value={stu.doj} onChange={(e) => handleInputChange(e, i, "doj")} />
+                ) : (
+                  stu.doj
+                )}
+              </td>
+              <td>
+                {editIndex === i ? (
+                  <input value={stu.mobile} onChange={(e) => handleInputChange(e, i, "mobile")} />
+                ) : (
+                  stu.mobile
+                )}
+              </td>
+              <td>
+                {editIndex === i ? (
+                  <input value={stu.father} onChange={(e) => handleInputChange(e, i, "father")} />
+                ) : (
+                  stu.father
+                )}
+              </td>
+              <td>
+                {editIndex === i ? (
+                  <input value={stu.gaurdian} onChange={(e) => handleInputChange(e, i, "gaurdian")} />
+                ) : (
+                  stu.gaurdian
+                )}
+              </td>
+              <td>
+                {editIndex === i ? (
+                  <input value={stu.classteacher} onChange={(e) => handleInputChange(e, i, "classteacher")} />
+                ) : (
+                  stu.classteacher
+                )}
+              </td>
+              <td>
+                {editIndex === i ? (
+                  <input value={stu.other} onChange={(e) => handleInputChange(e, i, "other")} />
+                ) : (
+                  stu.other
+                )}
+              </td>
+              <td>
+                {editIndex === i ? (
+                  <button className="btn btn-success" onClick={() => saveRow(stu)}>Save</button>
+                ) : (
+                  <button className="btn btn-primary" onClick={() => handleEditClick(i)}>Edit</button>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+import { useState, useEffect } from "react";
+import axios from "axios";
+
+function Std_info_c1_u_pulldata() {
+  const [stdinfo, setStdinfo] = useState([]);
+  const [editIndex, setEditIndex] = useState(null);
+  const [editData, setEditData] = useState({});
+
+  useEffect(() => {
+    axios.post("http://localhost:8080/s/pullrecords")
+      .then(res => setStdinfo(res.data))
+      .catch(err => console.error(err));
+  }, []);
+
+  const handleEdit = (index) => {
+    setEditIndex(index);
+    setEditData({ ...stdinfo[index] });
+  };
+
+  const handleChange = (e, field) => {
+    setEditData({ ...editData, [field]: e.target.value });
+  };
+
+  const saveRow = async () => {
+    try {
+      await axios.put(`http://localhost:8080/s/update/${editData.rollno}`, editData);
+      const updated = [...stdinfo];
+      updated[editIndex] = editData;
+      setStdinfo(updated);
+      setEditIndex(null);
+      alert("Saved successfully!");
+    } catch (err) {
+      console.error(err);
+      alert("Save failed!");
+    }
+  };
+
+  const cancelEdit = () => {
+    setEditIndex(null);
+    setEditData({});
+  };
+
+  return (
+    <div className="container mt-4">
+      <h2>Student Records</h2>
+      <table className="table table-bordered table-striped">
+        <thead className="table-dark">
+          <tr>
+            <th>Roll No</th><th>Name</th><th>Gender</th><th>Address</th>
+            <th>Class</th><th>DOB</th><th>DOJ</th><th>Mobile</th>
+            <th>Father</th><th>Guardian</th><th>Class Teacher</th><th>Other</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {stdinfo.map((student, index) => (
+            <tr key={index}>
+              <td>{student.rollno}</td>
+              <td>
+                {editIndex === index ? (
+                  <input value={editData.name || ""} onChange={(e) => handleChange(e, "name")} />
+                ) : student.name}
+              </td>
+              <td>
+                {editIndex === index ? (
+                  <input value={editData.gender || ""} onChange={(e) => handleChange(e, "gender")} />
+                ) : student.gender}
+              </td>
+              <td>
+                {editIndex === index ? (
+                  <input value={editData.address || ""} onChange={(e) => handleChange(e, "address")} />
+                ) : student.address}
+              </td>
+              <td>
+                {editIndex === index ? (
+                  <input value={editData.standardandsection || ""} onChange={(e) => handleChange(e, "standardandsection")} />
+                ) : student.standardandsection}
+              </td>
+              <td>
+                {editIndex === index ? (
+                  <input value={editData.dob || ""} onChange={(e) => handleChange(e, "dob")} />
+                ) : student.dob}
+              </td>
+              <td>
+                {editIndex === index ? (
+                  <input value={editData.doj || ""} onChange={(e) => handleChange(e, "doj")} />
+                ) : student.doj}
+              </td>
+              <td>
+                {editIndex === index ? (
+                  <input value={editData.mobile || ""} onChange={(e) => handleChange(e, "mobile")} />
+                ) : student.mobile}
+              </td>
+              <td>
+                {editIndex === index ? (
+                  <input value={editData.father || ""} onChange={(e) => handleChange(e, "father")} />
+                ) : student.father}
+              </td>
+              <td>
+                {editIndex === index ? (
+                  <input value={editData.gaurdian || ""} onChange={(e) => handleChange(e, "gaurdian")} />
+                ) : student.gaurdian}
+              </td>
+              <td>
+                {editIndex === index ? (
+                  <input value={editData.classteacher || ""} onChange={(e) => handleChange(e, "classteacher")} />
+                ) : student.classteacher}
+              </td>
+              <td>
+                {editIndex === index ? (
+                  <input value={editData.other || ""} onChange={(e) => handleChange(e, "other")} />
+                ) : student.other}
+              </td>
+              <td>
+                {editIndex === index ? (
+                  <>
+                    <button className="btn btn-success btn-sm me-1" onClick={saveRow}>Save</button>
+                    <button className="btn btn-secondary btn-sm" onClick={cancelEdit}>Cancel</button>
+                  </>
+                ) : (
+                  <button className="btn btn-primary btn-sm" onClick={() => handleEdit(index)}>Edit</button>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+export default Std_info_c1_u_pulldata;
+
+
+public void seditcolomservice(std_save_record std_Save_Record) throws Exception {
+    Optional<Sch_std_Save_Record> dbcheck = std_Repository_saverecords.findById(std_Save_Record.getId());
+
+    if (dbcheck.isPresent()) {
+        Sch_std_Save_Record s_Save_Record = dbcheck.get(); // ✅ get existing record
+
+        Date timeDatecreation = new Date();
+        s_Save_Record.setName(std_Save_Record.getName());
+        s_Save_Record.setRollno(std_Save_Record.getRollno());
+        s_Save_Record.setAddress(std_Save_Record.getAddress());
+        s_Save_Record.setClassteacher(std_Save_Record.getClassteacher());
+        s_Save_Record.setDob(std_Save_Record.getDob());
+        s_Save_Record.setDoj(std_Save_Record.getDoj());
+        s_Save_Record.setFather(std_Save_Record.getFather());
+        s_Save_Record.setGaurdian(std_Save_Record.getGaurdien());
+        s_Save_Record.setGender(std_Save_Record.getGender());
+        s_Save_Record.setMobile(std_Save_Record.getMobile());
+        s_Save_Record.setOther(std_Save_Record.getOther());
+        s_Save_Record.setStandardandsection(std_Save_Record.getStandardandsection());
+        s_Save_Record.setUserid(std_Save_Record.getUserid());
+        s_Save_Record.setDateofrecord(timeDatecreation);
+
+        std_Repository_saverecords.save(s_Save_Record); // ✅ saves updated existing record
+
+    } else {
+        throw new Exception("ID does not exist");
+    }
+}

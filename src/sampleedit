@@ -1,0 +1,176 @@
+ 
+ 
+import { useState } from "react"
+
+ 
+import axios from "axios"
+import { GET_USER_ID, GET_USER_NAME } from "./utilils"
+import Add_new_student from "./add_new_student"
+import Std_info_c1_u_pulldata from "./Std_info_c1_u_pulldata"
+import Add_new_e_student from "./Add_new_e_student"
+ 
+ 
+ 
+ 
+
+function Std_info_c1_e({dataedit1})
+{////Std_info/c1/u
+    let userName=GET_USER_NAME()
+          let userId=GET_USER_ID()
+                   
+        if(userName==null)
+          {
+            window.location="/homesch"
+          }
+    
+    
+    let[addstudent,setaddstudent]=useState(false)
+    let[stdinfo, setstdinfo]=useState({img1:"",roll_no:"",name:"",standardandsection:"",gender:"",dob:"",doj:"",address:"",mobile:"",father:"",gaurdien:"",classTeacher:"",other:"", userid:""})
+    let[o_std_details, seto_std_details]=useState(false)
+    let[message, setmessage]=useState(true)
+    let[show_A_M, setshow_A_M]=useState(true)
+    let[img1, setimg1]=useState("")
+    let[apiErrorMessage, setapiErrorMessage]=useState({openMsg:false, apiMessage:false})
+   // setstdinfo({...addstudent,userID:userId})
+     
+    
+
+     
+    async function SendApi()
+    {
+        console.log("cal api")
+        setmessage(false) 
+       
+        
+             try{
+               
+               let apiresponse=await axios.post('http://localhost:8080/s/edit')
+               console.log(apiresponse)
+               console.log(apiresponse.data.result)
+               setapiErrorMessage({...apiErrorMessage, apiMessage:false})
+               setmessage(false)
+               }
+             catch(error)
+        {
+            console.log(error.response.data.message)
+            //setapiErrorMessage( {...apiErrorMessage, openMsg:true})
+            setapiErrorMessage({...apiErrorMessage, apiMessage:true})
+            setmessage(true)
+        }
+
+         
+       
+   
+
+       // window.location="/Std_info/c1/u"
+    }
+ 
+     
+ 
+                     function showconformdata(data)
+                    {
+                        setstdinfo(data)
+                        seto_std_details(true)
+                        setapiErrorMessage({...apiErrorMessage, apiMessage:false})
+                     }
+                   function back_fun()
+                   {
+                    window.location="/Std_info/c/update"
+                   }
+                    function home_fun()
+                   {
+                    window.location="/Std_info"
+
+                   }
+                   function logout()
+                    {
+                        localStorage.clear()
+                        window.location="/homesch"
+                    }
+    
+
+    return(
+        <div className="container">
+            <div className="mt-5">
+            <h6>user,</h6><h3>{userName}{userId}</h3>
+            </div>
+            <button className="btn btn-primary mt-5" onClick={e=>home_fun(true)}>Home</button>
+             <button className="btn btn-primary ms-3 mt-5" onClick={e=>back_fun()}>Back</button>
+             <button className="btn btn-primary mt-5 ms-3" onClick={e=>logout()}>logout</button>
+            <div className="row mt-5 ">
+             <h1>St'Martins school</h1>
+                <div className="col-4">
+                   
+                    <button className="btn btn-primary mt-5" onClick={e=>setshow_A_M(true)}>Add Details</button>
+                     
+                    <h1>  </h1>
+                       
+                    
+                        
+                        {
+                            message==false && 
+                                 <div>
+                                    <h2 className="text-success">success </h2>
+                                    <h2 className="text-success">record saved</h2>
+                                </div>
+                        
+                        }
+                   
+                     {
+                        o_std_details==true &&
+                       <div>
+                            <h1> Conform Details</h1>
+                           {/* <img src={URL.createObjectURL(stdinfo.img1)}/><br/> */}
+                            Name={stdinfo.name}<br/>
+                            id={stdinfo.roll_no}<br/>
+                            {
+                               apiErrorMessage.apiMessage==true && 
+                              <div className="text-danger"> Roll.no already exists, try new roll.no </div>
+                            }
+                            Standardandsection={stdinfo.standardandsection}<br/>
+                            gender={stdinfo.gender}<br/>
+                            dob={stdinfo.dob}<br/>
+                            doj={stdinfo.doj}<br/>
+                            address={stdinfo.address}<br/>
+                            Mobile={stdinfo.mobile}<br/>
+                            Father={stdinfo.father}<br/>
+                            Gaurdien={stdinfo.gaurdien}<br/>
+                            classTeacher={stdinfo.classTeacher  }<br/>
+                            Other={stdinfo.other}<br/>
+                            
+                            <button className="btn btn-warning  d-grid mt-3" type="button" onClick={e=>SendApi()}> SAVE</button>
+                                    </div>
+                    }
+                    
+                    
+               </div>
+                        
+                        {
+                        show_A_M == true && 
+                        <Add_new_e_student rece_data={showconformdata}/>
+                       
+                         }
+                     
+              
+                           <div className="row mt-5 ">
+                                <div className="col-4">
+                                    </div>
+                                    <div className="col-4">
+                                     </div>
+                                <div className="col-4">
+                                </div>
+                             </div>
+                             
+                    
+                
+            </div>
+             <Std_info_c1_u_pulldata/>
+        </div>
+
+
+         
+    )
+}
+export default Std_info_c1_e
+
+ 
