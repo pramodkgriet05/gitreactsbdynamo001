@@ -25,12 +25,12 @@ jobs:
         run: npm run build
 
       - name: Deploy to S3
-        uses: aws-actions/s3-sync@v2
+        uses: jakejarvis/s3-sync-action@master
         with:
-          source-dir: build/
-          bucket: gitreactdbdyndb01 
-          delete: true
+          args: --delete
         env:
+          AWS_S3_BUCKET: gitreactdbdyndb01
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ap-south-1   # change if different
+          AWS_REGION: ap-south-1
+          SOURCE_DIR: build
